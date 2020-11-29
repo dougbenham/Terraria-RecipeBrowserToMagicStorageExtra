@@ -18,7 +18,7 @@ namespace RecipeBrowserToMagicStorage
         public static RecipeBrowserToMagicStorageConfig Instance;
 
         [Label("Use Hotkey")]
-        [Tooltip("Changes filter only if a hot key is pressed.")]
+        [Tooltip("True - Changes only if a hot key is pressed. False - Changes always except if a hot key is pressed.")]
         [DefaultValue(true)]
         public bool ByHotKey;
     }

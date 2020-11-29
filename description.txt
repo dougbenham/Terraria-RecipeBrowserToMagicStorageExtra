@@ -1,1 +1,10 @@
-RecipeBrowser&&MagicStorage is a pretty cool mod, it does...this. Modify this file with a description of your mod.
+Allows you to filter items in your magic storage according to the selected item in the Recipe browser.
+
+Magic storage:
+Filters if the crafting or the storage panel is open.
+
+Recipe browser:
+Filters when the item selected in one of Recipe list, Ingrigient list or Items list.
+
+
+By default filters by click on item only if the filter hot key is pressed in that moment. That behaviour can be changed in the config.
