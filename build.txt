@@ -1,4 +1,4 @@
 displayName = Recipe Browser && Magic Storage
 author = Kinoler
-version = 1.0.0.1
+version = 1.0.0.2
 modReferences = RecipeBrowser, MagicStorage
