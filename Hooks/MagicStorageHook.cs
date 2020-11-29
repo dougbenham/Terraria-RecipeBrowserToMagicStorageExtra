@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using MagicStorage;
 using MagicStorage.Components;
 using RecipeBrowserToMagicStorage.Utils;
@@ -12,7 +15,8 @@ namespace RecipeBrowserToMagicStorage.Hooks
         public static void SetMagicStorageFilterName(string name)
         {
             Type type = null;
-            switch (GetCurrentOpenedStorageType())
+            var openedStorageType = GetCurrentOpenedStorageType();
+            switch (openedStorageType)
             {
                 case StorageType.None:
                     return;
@@ -30,6 +34,57 @@ namespace RecipeBrowserToMagicStorage.Hooks
 
             ReflectionUtils.SetField(searchBar, "text", name);
             ReflectionUtils.SetField(searchBar, "cursorPosition", name.Length);
+            StorageGUI.RefreshItems();
+
+            if (openedStorageType == StorageType.Crafting)
+            {
+                var thread = new Thread(SelectFirstAvailableRecipe);
+                thread.Start(name);
+            }
+        }
+
+        private static void SelectFirstAvailableRecipe(object data)
+        {
+            try
+            {
+                var type = typeof(CraftingGUI);
+                while (ReflectionUtils.GetField<bool>(null, "threadRunning", type))
+                    Thread.Sleep(1);
+
+                var threadRecipes = ReflectionUtils.GetField<List<Recipe>>(null, "threadRecipes", type);
+                var threadRecipesAvailable = ReflectionUtils.GetField<List<bool>>(null, "threadRecipeAvailable", type);
+                if (threadRecipes == null || threadRecipesAvailable == null)
+                    return;
+
+                var threadRecipesValid = new List<Recipe>();
+                var threadRecipesAvailableValid = new List<bool>();
+                var name = (string)data;
+
+                for (var i = 0; i < threadRecipes.Count; i++)
+                {
+                    if (threadRecipes[i].createItem.Name != name)
+                        continue;
+
+                    threadRecipesValid.Add(threadRecipes[i]);
+                    threadRecipesAvailableValid.Add(threadRecipesAvailable[i]);
+                }
+
+                var index = threadRecipesAvailableValid.IndexOf(true);
+                var selectRecipe = index != -1 ? threadRecipes[index] : threadRecipesValid.FirstOrDefault();
+                SelectRecipe(selectRecipe);
+            }
+            catch (IndexOutOfRangeException)
+            {
+            }
+            catch (Exception e)
+            {
+                Main.NewTextMultiline(e.ToString());
+            }
+        }
+
+        private static void SelectRecipe(Recipe selectRecipe)
+        {
+            ReflectionUtils.SetField(null, "selectedRecipe", selectRecipe, typeof(CraftingGUI));
             StorageGUI.RefreshItems();
         }
 
