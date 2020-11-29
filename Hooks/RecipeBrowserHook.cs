@@ -41,6 +41,7 @@ namespace RecipeBrowserToMagicStorage.Hooks
         {
             UnRegister();
             RecipeSlotOnClickMethods = null;
+            TypeNames = null;
         }
 
         private static void UnRegister()
