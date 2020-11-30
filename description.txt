@@ -11,6 +11,9 @@ By default filters by click on item only if the filter hot key is pressed in tha
 
 Change log:
 
+1.0.0.4:
+Fixed calling the base method for ingredients
+
 1.0.0.3:
 Added homepage, Renamed config property 
 

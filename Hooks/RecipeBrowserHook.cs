@@ -60,15 +60,10 @@ namespace RecipeBrowserToMagicStorage.Hooks
         private static void InvokeBase(object self, UIMouseEvent e)
         {
             UnRegister();
-            var typeName = self.GetType().Name;
-            for (var i = 0; i < TypeNames.Length; i++)
-            {
-                if (TypeNames[0] == typeName)
-                {
-                    RecipeSlotOnClickMethods[i]?.Invoke(self, new[] {e});
-                    break;
-                }
-            }
+
+            var type = self.GetType();
+            var method =  ReflectionUtils.GetMethodInfo(type, MethodName);
+            method?.Invoke(self, new[] { e });
 
             Register();
         }

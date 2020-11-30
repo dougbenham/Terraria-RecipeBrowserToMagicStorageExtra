@@ -70,15 +70,12 @@ namespace RecipeBrowserToMagicStorage.Hooks
                 }
 
                 var index = threadRecipesAvailableValid.IndexOf(true);
-                var selectRecipe = index != -1 ? threadRecipes[index] : threadRecipesValid.FirstOrDefault();
+                var selectRecipe = index != -1 ? threadRecipesValid[index] : threadRecipesValid.FirstOrDefault();
                 SelectRecipe(selectRecipe);
             }
-            catch (IndexOutOfRangeException)
+            catch (Exception)
             {
-            }
-            catch (Exception e)
-            {
-                Main.NewTextMultiline(e.ToString());
+                // ignored
             }
         }
 
@@ -109,6 +106,5 @@ namespace RecipeBrowserToMagicStorage.Hooks
             Crafting,
             Storage
         }
-
     }
 }
