@@ -1,5 +1,6 @@
 displayName = Recipe Browser && Magic Storage
 author = Kinoler
-version = 1.0.0.5
+version = 1.0.0.6
 homepage = https://forums.terraria.org/index.php?threads/recipe-browser-magic-storage.100853/
 modReferences = RecipeBrowser, MagicStorage
+side = Client
