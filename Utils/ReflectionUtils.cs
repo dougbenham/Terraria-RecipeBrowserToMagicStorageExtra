@@ -22,14 +22,27 @@ namespace RecipeBrowserToMagicStorage.Utils
             return default;
         }
 
-        public static void SetField(object obj, string name, object value, Type classType = null)
+        public static void SetValue(object obj, string name, object value, Type classType = null)
         {
             var flags = obj != null
                 ? BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic
                 : BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
 
             var type = obj != null ? obj?.GetType() : classType;
-            type?.GetField(name, flags)?.SetValue(obj, value);
+
+            var tryField = type?.GetField(name, flags);
+            if (tryField != null)
+            {
+                tryField?.SetValue(obj, value);
+                return;
+            }
+
+            var tryProperty = type?.GetProperty(name, flags);
+            if (tryProperty != null)
+            {
+                tryProperty?.SetValue(obj, value);
+                return;
+            }
         }
 
         public static Type FindType(Assembly assembly, string typeName)
