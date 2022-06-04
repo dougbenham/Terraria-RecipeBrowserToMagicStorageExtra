@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using MagicStorage;
 using MagicStorage.Components;
+using MagicStorage.UI;
 using RecipeBrowserToMagicStorage.Utils;
 using Terraria;
 using Terraria.ModLoader;
@@ -29,11 +30,11 @@ namespace RecipeBrowserToMagicStorage.Hooks
             }
 
             var searchBar = ReflectionUtils.GetField<UISearchBar>(null, "searchBar", type);
-            if (searchBar == null) 
+            if (searchBar == null)
                 return;
 
-            ReflectionUtils.SetField(searchBar, "text", name);
-            ReflectionUtils.SetField(searchBar, "cursorPosition", name.Length);
+            ReflectionUtils.SetValue(searchBar, "Text", name);
+            ReflectionUtils.SetValue(searchBar, "cursorPosition", name.Length);
             StorageGUI.RefreshItems();
 
             if (openedStorageType == StorageType.Crafting)
@@ -81,7 +82,7 @@ namespace RecipeBrowserToMagicStorage.Hooks
 
         private static void SelectRecipe(Recipe selectRecipe)
         {
-            ReflectionUtils.SetField(null, "selectedRecipe", selectRecipe, typeof(CraftingGUI));
+            ReflectionUtils.SetValue(null, "selectedRecipe", selectRecipe, typeof(CraftingGUI));
             StorageGUI.RefreshItems();
         }
 
@@ -92,7 +93,7 @@ namespace RecipeBrowserToMagicStorage.Hooks
             if (!Main.playerInventory || storageAccess.X < 0 || storageAccess.Y < 0)
                 return StorageType.None;
 
-            var modTile = TileLoader.GetTile(Main.tile[storageAccess.X, storageAccess.Y].type);
+            var modTile = TileLoader.GetTile(Main.tile[storageAccess.X, storageAccess.Y].TileType);
             var heart = (modTile as StorageAccess)?.GetHeart(storageAccess.X, storageAccess.Y);
             if (heart == null)
                 return StorageType.None;
