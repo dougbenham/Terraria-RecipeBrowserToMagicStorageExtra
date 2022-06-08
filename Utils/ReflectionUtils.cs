@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace RecipeBrowserToMagicStorage.Utils
+namespace RecipeBrowserToMagicStorageExtra.Utils
 {
     public static class ReflectionUtils
     {
@@ -33,7 +33,7 @@ namespace RecipeBrowserToMagicStorage.Utils
             if (field != null)
 	            field.SetValue(obj, value);
             else
-	            RecipeBrowserToMagicStorage.Instance.Logger.Error("Couldn't find field named " + name);
+	            RecipeBrowserToMagicStorageExtra.Instance.Logger.Error("Couldn't find field named " + name);
         }
 
         public static void SetProperty(object obj, string name, object value, Type classType = null)
@@ -47,7 +47,7 @@ namespace RecipeBrowserToMagicStorage.Utils
 	        if (prop != null)
 		        prop.SetValue(obj, value);
 	        else
-		        RecipeBrowserToMagicStorage.Instance.Logger.Error("Couldn't find property named " + name);
+		        RecipeBrowserToMagicStorageExtra.Instance.Logger.Error("Couldn't find property named " + name);
         }
 
         public static Type FindType(Assembly assembly, string typeName)

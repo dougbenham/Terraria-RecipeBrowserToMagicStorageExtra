@@ -1,14 +1,14 @@
-using RecipeBrowserToMagicStorage.Hooks;
+using RecipeBrowserToMagicStorageExtra.Hooks;
 using Terraria.ModLoader;
 
-namespace RecipeBrowserToMagicStorage
+namespace RecipeBrowserToMagicStorageExtra
 {
-	public class RecipeBrowserToMagicStorage : Mod
+	public class RecipeBrowserToMagicStorageExtra : Mod
 	{
-		internal static RecipeBrowserToMagicStorage Instance;
+		internal static RecipeBrowserToMagicStorageExtra Instance;
 		internal static ModHotKey AutoRecallHotKey;
 
-		public RecipeBrowserToMagicStorage()
+		public RecipeBrowserToMagicStorageExtra()
 		{
 			Instance = this;
 		}

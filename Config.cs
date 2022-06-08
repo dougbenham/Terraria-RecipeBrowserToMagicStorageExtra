@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.ID;
+﻿using System.ComponentModel;
 using Terraria.ModLoader.Config;
 
-namespace RecipeBrowserToMagicStorage
+namespace RecipeBrowserToMagicStorageExtra
 {
 #pragma warning restore 0649
     [Label("Config")]
-    public class RecipeBrowserToMagicStorageConfig : ModConfig
+    public class Config : ModConfig
     {
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
-        public static RecipeBrowserToMagicStorageConfig Instance;
+        public static Config Instance;
 
         [Label("By Hotkey")]
         [Tooltip("True - Changes only if a hot key is pressed. False - Changes always except if a hot key is pressed.")]

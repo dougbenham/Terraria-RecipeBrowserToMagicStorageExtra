@@ -6,11 +6,11 @@ using System.Threading;
 using MagicStorageExtra;
 using MagicStorageExtra.Components;
 using MagicStorageExtra.UI;
-using RecipeBrowserToMagicStorage.Utils;
+using RecipeBrowserToMagicStorageExtra.Utils;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace RecipeBrowserToMagicStorage.Hooks
+namespace RecipeBrowserToMagicStorageExtra.Hooks
 {
     public static class MagicStorageReflection
     {
@@ -33,7 +33,7 @@ namespace RecipeBrowserToMagicStorage.Hooks
             var searchBar = ReflectionUtils.GetField<UISearchBar>(null, "searchBar", type);
             if (searchBar == null)
             {
-	            RecipeBrowserToMagicStorage.Instance.Logger.Error("Couldn't find search bar on " + type?.Name);
+	            RecipeBrowserToMagicStorageExtra.Instance.Logger.Error("Couldn't find search bar on " + type?.Name);
 	            return;
             }
 
@@ -60,7 +60,7 @@ namespace RecipeBrowserToMagicStorage.Hooks
                 var threadRecipesAvailable = ReflectionUtils.GetField<List<bool>>(null, "threadRecipeAvailable", type);
                 if (threadRecipes == null || threadRecipesAvailable == null)
                 {
-	                RecipeBrowserToMagicStorage.Instance.Logger.Error("Couldn't find threadRecipes");
+	                RecipeBrowserToMagicStorageExtra.Instance.Logger.Error("Couldn't find threadRecipes");
 	                return;
                 }
 
@@ -83,7 +83,7 @@ namespace RecipeBrowserToMagicStorage.Hooks
             }
             catch (Exception ex)
             {
-	            RecipeBrowserToMagicStorage.Instance.Logger.Error(null, ex);
+	            RecipeBrowserToMagicStorageExtra.Instance.Logger.Error(null, ex);
             }
         }
 
@@ -92,7 +92,7 @@ namespace RecipeBrowserToMagicStorage.Hooks
 	        var method = typeof(CraftingGUI).GetMethod("SetSelectedRecipe", BindingFlags.NonPublic | BindingFlags.Static);
 	        if (method == null)
 	        {
-		        RecipeBrowserToMagicStorage.Instance.Logger.Error("Couldn't find SetSelectedRecipe");
+		        RecipeBrowserToMagicStorageExtra.Instance.Logger.Error("Couldn't find SetSelectedRecipe");
 		        return;
 	        }
             method.Invoke(null, new object[] { selectRecipe });

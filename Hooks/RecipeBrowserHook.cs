@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Reflection;
 using MonoMod.RuntimeDetour.HookGen;
-using RecipeBrowserToMagicStorage.Utils;
+using RecipeBrowserToMagicStorageExtra.Utils;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
 
-namespace RecipeBrowserToMagicStorage.Hooks
+namespace RecipeBrowserToMagicStorageExtra.Hooks
 {
     public static class RecipeBrowserHook
     {
@@ -72,10 +72,10 @@ namespace RecipeBrowserToMagicStorage.Hooks
         {
             InvokeBase(self, e);
 
-            if ((!RecipeBrowserToMagicStorageConfig.Instance.ByHotKey ||
-                 !RecipeBrowserToMagicStorage.AutoRecallHotKey.Current) &&
-                (RecipeBrowserToMagicStorageConfig.Instance.ByHotKey ||
-                 RecipeBrowserToMagicStorage.AutoRecallHotKey.Current)) 
+            if ((!Config.Instance.ByHotKey ||
+                 !RecipeBrowserToMagicStorageExtra.AutoRecallHotKey.Current) &&
+                (Config.Instance.ByHotKey ||
+                 RecipeBrowserToMagicStorageExtra.AutoRecallHotKey.Current)) 
                 return;
 
             var item = ReflectionUtils.GetField<Item>(e.Target, "item");
