@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
-using MagicStorage;
-using MagicStorage.Components;
+using MagicStorageExtra;
+using MagicStorageExtra.Components;
+using MagicStorageExtra.UI;
 using RecipeBrowserToMagicStorage.Utils;
 using Terraria;
 using Terraria.ModLoader;
@@ -29,10 +31,13 @@ namespace RecipeBrowserToMagicStorage.Hooks
             }
 
             var searchBar = ReflectionUtils.GetField<UISearchBar>(null, "searchBar", type);
-            if (searchBar == null) 
-                return;
+            if (searchBar == null)
+            {
+	            RecipeBrowserToMagicStorage.Instance.Logger.Error("Couldn't find search bar on " + type?.Name);
+	            return;
+            }
 
-            ReflectionUtils.SetField(searchBar, "text", name);
+            ReflectionUtils.SetProperty(searchBar, "Text", name);
             ReflectionUtils.SetField(searchBar, "cursorPosition", name.Length);
             StorageGUI.RefreshItems();
 
@@ -49,12 +54,15 @@ namespace RecipeBrowserToMagicStorage.Hooks
             {
                 var type = typeof(CraftingGUI);
                 while (ReflectionUtils.GetField<bool>(null, "threadRunning", type))
-                    Thread.Sleep(1);
+                    Thread.Sleep(10);
 
                 var threadRecipes = ReflectionUtils.GetField<List<Recipe>>(null, "threadRecipes", type);
                 var threadRecipesAvailable = ReflectionUtils.GetField<List<bool>>(null, "threadRecipeAvailable", type);
                 if (threadRecipes == null || threadRecipesAvailable == null)
-                    return;
+                {
+	                RecipeBrowserToMagicStorage.Instance.Logger.Error("Couldn't find threadRecipes");
+	                return;
+                }
 
                 var threadRecipesValid = new List<Recipe>();
                 var threadRecipesAvailableValid = new List<bool>();
@@ -73,16 +81,21 @@ namespace RecipeBrowserToMagicStorage.Hooks
                 var selectRecipe = index != -1 ? threadRecipesValid[index] : threadRecipesValid.FirstOrDefault();
                 SelectRecipe(selectRecipe);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // ignored
+	            RecipeBrowserToMagicStorage.Instance.Logger.Error(null, ex);
             }
         }
 
         private static void SelectRecipe(Recipe selectRecipe)
         {
-            ReflectionUtils.SetField(null, "selectedRecipe", selectRecipe, typeof(CraftingGUI));
-            StorageGUI.RefreshItems();
+	        var method = typeof(CraftingGUI).GetMethod("SetSelectedRecipe", BindingFlags.NonPublic | BindingFlags.Static);
+	        if (method == null)
+	        {
+		        RecipeBrowserToMagicStorage.Instance.Logger.Error("Couldn't find SetSelectedRecipe");
+		        return;
+	        }
+            method.Invoke(null, new object[] { selectRecipe });
         }
 
         private static StorageType GetCurrentOpenedStorageType()

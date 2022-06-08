@@ -9,13 +9,4 @@ Filters when the item selected in one of Recipe list, Ingrigient list or Items l
 
 By default filters by click on item only if the filter hot key is pressed in that moment. That behaviour can be changed in the config.
 
-Change log:
-
-1.0.0.4:
-Fixed calling the base method for ingredients
-
-1.0.0.3:
-Added homepage, Renamed config property 
-
-1.0.0.2:
-Added auto selecting recipe in the craft menu
+based on original by Kinoler

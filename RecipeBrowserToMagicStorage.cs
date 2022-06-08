@@ -1,19 +1,17 @@
-using System;
-using System.Reflection;
-using MagicStorage;
-using MagicStorage.Components;
-using MonoMod.Cil;
-using MonoMod.RuntimeDetour.HookGen;
 using RecipeBrowserToMagicStorage.Hooks;
-using Terraria;
 using Terraria.ModLoader;
-using Terraria.UI;
 
 namespace RecipeBrowserToMagicStorage
 {
 	public class RecipeBrowserToMagicStorage : Mod
-    {
-        internal static ModHotKey AutoRecallHotKey;
+	{
+		internal static RecipeBrowserToMagicStorage Instance;
+		internal static ModHotKey AutoRecallHotKey;
+
+		public RecipeBrowserToMagicStorage()
+		{
+			Instance = this;
+		}
 
         public override void Load()
         {
