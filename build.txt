@@ -1,5 +1,5 @@
 displayName = Recipe Browser & Magic Storage Extra
 author = Doug
 version = 0.1
-homepage = 
+homepage = https://github.com/dougbenham/Terraria-RecipeBrowserToMagicStorageExtra
 modReferences = RecipeBrowser, MagicStorageExtra
